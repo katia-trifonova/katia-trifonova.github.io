@@ -1,0 +1,86 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'lato', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #000;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.portrait {
+  margin: 0 auto;
+  margin-top: 80px;
+  text-align: center;
+}
+
+.text {
+  max-width: 620px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 1%;
+  padding-bottom: 30px;
+  background-color: rgba(232, 236, 237, .6);
+  margin-bottom: 80px;
+}
+
+
+span {
+  padding: 0;
+  margin: 0;
+  display: block;
+  line-height: 1;
+  margin-bottom: 15px;
+  font-size: 48px;
+  font-weight: 600;
+  color: #3b676d;
+}
+
+strong {
+  font-weight: 500;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #905e41;
+}
+
+.portrait__social > a{
+  text-decoration: none;
+  font-size: 30px;
+}
+
+
+.portrait__email,
+.text__git {
+  text-decoration: none;
+  font-weight: 500;
+  -webkit-transition: color .3s ease;
+  -o-transition: color .3s ease;
+  transition: color .3s ease;
+}
+
+.portrait__social a:hover,
+.portrait__email:hover,
+.text__git:hover {
+  color: #449ea3;
+  -webkit-transition: color .3s ease;
+  -o-transition: color .3s ease;
+  transition: color .3s ease;
+}
