@@ -17,9 +17,6 @@ body {
   padding: 0;
   padding-top: 80px;
   padding-bottom: 100px;
-  background-image: url("../img/bg1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .portrait {
@@ -27,15 +24,17 @@ body {
   text-align: center;
 }
 
-.text {
+main {
   max-width: 620px;
   margin: 0 auto;
   margin-top: 40px;
   padding: 1%;
   padding-bottom: 30px;
-  background-color: rgba(232, 236, 237, .6);
 }
 
+.photo {
+  width: 100%;
+}
 
 span {
   padding: 0;
