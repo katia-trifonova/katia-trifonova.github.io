@@ -95,8 +95,23 @@ footer {
   background-color: #eeefe5;
   padding-top: 80px;
   padding-bottom: 80px;
+}
+
+.social {
+  float: left;
+  width: 30%;
+  padding-left: 6%;
+}
+
+.email {
+  float: right;
+  width: 70%;
   padding-left: 6%;
   padding-right: 6%;
+}
+
+.icon {
+  margin-right: 30px;
 }
 
 .clearfix::after {
