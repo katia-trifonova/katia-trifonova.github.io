@@ -14,7 +14,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  min-width: 960px;
 }
 
 img {
@@ -24,14 +23,27 @@ img {
 
 h1 {
   font-size: 36px;
-  margin-top: 30px;
-  margin-bottom: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 960px) {
+  h1{
+    font-size: 24px;
+  }
 }
 
 p {
   margin: 0;
   font-size: 18px;
 }
+
+@media screen and (max-width: 960px) {
+  p, li, a {
+    font-size: 14px;
+  }
+}
+
+
 
 strong {
   color: #aa2a53;
@@ -51,45 +63,52 @@ li {
   list-style: none;
 }
 
-.top {
+header {
   background-color: #eeefe5;
 }
 
-.photo {
+picture {
   width: 30%;
   margin: 0;
   float: left;
-  overflow: hidden;
 }
 
 .hello {
   width: 70%;
   float: right;
-  padding-top: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   padding-right: 4%;
   padding-left: 6%;
 }
 
-.bottom {
+.info {
   width: 100%;
 }
 
 aside {
   float: left;
   width: 30%;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 80px;
   padding-left: 6%;
 }
 
-.about {
+main {
   width: 70%;
   float: right;
   padding-left: 6%;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 80px;
   padding-right: 8%;
 }
+
+@media screen and (max-width: 960px) {
+  main {
+    padding-bottom: 20px;
+  }
+}
+
 
 footer {
   background-color: #eeefe5;
@@ -97,10 +116,23 @@ footer {
   padding-bottom: 80px;
 }
 
+@media screen and (max-width: 960px) {
+  footer {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
 .social {
   float: left;
   width: 30%;
   padding-left: 6%;
+}
+
+
+.icon {
+  margin-right: 30px;
 }
 
 .email {
@@ -110,12 +142,17 @@ footer {
   padding-right: 6%;
 }
 
-.icon {
-  margin-right: 30px;
-}
+
 
 .clearfix::after {
   display: table;
   content: '';
   clear: both;
+}
+
+@media screen and (max-width: 960px) {
+  .mobile-width {
+    width: 100%;
+    float: none;
+  }
 }
