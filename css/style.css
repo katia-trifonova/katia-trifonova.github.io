@@ -26,7 +26,7 @@ h1 {
   margin: 0;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 600px) {
   h1{
     font-size: 24px;
   }
@@ -37,13 +37,11 @@ p {
   font-size: 18px;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 600px) {
   p, li, a {
     font-size: 14px;
   }
 }
-
-
 
 strong {
   color: #aa2a53;
@@ -52,6 +50,12 @@ strong {
 a {
   color: #aa2a53;
   text-decoration: underline;
+  transition: .5s color ease-out;
+}
+
+a:hover,
+a:active {
+  color: #8e9e00;
 }
 
 ul {
@@ -77,21 +81,18 @@ picture {
   width: 70%;
   float: right;
   padding-top: 40px;
-  padding-bottom: 40px;
   padding-right: 4%;
   padding-left: 6%;
 }
 
-.info {
-  width: 100%;
+@media screen and (max-width: 960px) {
+  .hello {
+    padding-bottom: 40px;
+  }
 }
 
-aside {
-  float: left;
-  width: 30%;
-  padding-top: 40px;
-  padding-bottom: 80px;
-  padding-left: 6%;
+.info {
+  width: 100%;
 }
 
 main {
@@ -109,6 +110,13 @@ main {
   }
 }
 
+aside {
+  float: left;
+  width: 30%;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  padding-left: 6%;
+}
 
 footer {
   background-color: #eeefe5;
@@ -130,9 +138,24 @@ footer {
   padding-left: 6%;
 }
 
+@media screen and (min-width: 601px) and (max-width: 960px) {
+  .social {
+    padding-bottom: 20px;
+  }
+}
 
-.icon {
+.icon-link {
+  display: inline-block;
   margin-right: 30px;
+}
+
+.icon-link > svg > path {
+  transition: .5s fill ease-out;
+}
+
+.icon-link:hover > svg > path,
+.icon-link:active > svg > path {
+  fill: #8e9e00;
 }
 
 .email {
@@ -141,8 +164,6 @@ footer {
   padding-left: 6%;
   padding-right: 6%;
 }
-
-
 
 .clearfix::after {
   display: table;
