@@ -165,7 +165,7 @@ footer {
   padding-right: 6%;
 }
 
-.clearfix::after {
+.clearfix:after {
   display: table;
   content: '';
   clear: both;
