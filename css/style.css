@@ -21,26 +21,30 @@ img {
   display: block;
 }
 
-h1 {
+h2 {
   font-size: 36px;
   margin: 0;
 }
 
 @media screen and (max-width: 600px) {
-  h1{
+  h2{
     font-size: 24px;
   }
+}
+
+dl {
+  margin: 0;
+  padding: 1em;
+}
+
+dd {
+  margin: 0;
+  font-size: 14px;
 }
 
 p {
   margin: 0;
   font-size: 18px;
-}
-
-@media screen and (max-width: 600px) {
-  p, li, a {
-    font-size: 14px;
-  }
 }
 
 strong {
@@ -71,13 +75,13 @@ header {
   background-color: #eeefe5;
 }
 
-picture {
+.photo {
   width: 30%;
   margin: 0;
   float: left;
 }
 
-.hello {
+.skills {
   width: 70%;
   float: right;
   padding-top: 40px;
@@ -86,12 +90,12 @@ picture {
 }
 
 @media screen and (max-width: 960px) {
-  .hello {
+  .skills {
     padding-bottom: 40px;
   }
 }
 
-.info {
+.about {
   width: 100%;
 }
 
@@ -104,10 +108,53 @@ main {
   padding-right: 8%;
 }
 
-@media screen and (max-width: 960px) {
-  main {
-    padding-bottom: 20px;
-  }
+.portfolio {
+  width: 100%;
+  padding-top: 60px;
+}
+
+.project {
+  position: relative;
+  margin-top: 40px;
+  width: 60%;
+  background-color: #eeefe5;
+}
+
+.project:first-of-type{
+  margin-top: 20px;
+}
+
+.project:hover .summary {
+  opacity: 1;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+.project:hover .screen-link {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+
+.screen-link {
+  display: block;
+  position: relative;
+  display: block;
+  background-color: #000;
+  transition: opacity .3s ease-out;
+}
+
+.screen {
+  width: 100%;
+}
+
+.summary {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  width: 100%;
+  z-index: 100;
+  transition: opacity .3s ease-out;
 }
 
 aside {
@@ -175,5 +222,61 @@ footer {
   .mobile-width {
     width: 100%;
     float: none;
+  }
+
+  main {
+    padding-right: 6%;
+  }
+
+  .portfolio {
+    padding-top: 40px;
+  }
+
+  .project {
+    width: 100%;
+    background-color: #fff;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .summary {
+    padding: 0 0 .5em 0;
+    position: static;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  }
+
+  dd {
+    font-size: 18px;
+  }
+
+  .project:first-of-type {
+    margin-top: 10px;
+  }
+
+  .project:hover .screen-link {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  }
+}
+
+@media screen and (max-width: 600px) {
+  p, li, a, dd {
+    font-size: 14px;
+  }
+
+  .project:first-of-type {
+    margin-top: 0;
+  }
+
+  .screen-link {
+    margin-right: -7%;
+    margin-left: -7%;
+  }
+
+  main {
+    padding-bottom: 0;
   }
 }

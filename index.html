@@ -13,7 +13,7 @@
 <body>
   <header class="clearfix">
 
-    <picture class="mobile-width">
+    <picture class="photo mobile-width">
       <source
           media="(max-width: 960px)"
           srcset="img/photo3x2@1x.jpg 1x,
@@ -26,8 +26,8 @@
           src="img/photo1x1@2x.jpg" alt="Katia Trifonova">
     </picture>
 
-    <div class="hello mobile-width">
-      <h1>Привет</h1>
+    <div class="skills mobile-width">
+      <h2>Привет</h2>
       <p>Меня зовут Катя, и я верстаю на <strong>HTML5</strong> и <strong>CSS3</strong>.</p>
       <p>Владею основами <strong>JavaScript</strong> (пишу скрипты для элементов взаимодействия на странице, работаю с библиотеками).
       <p>Умею <strong>БЭМ</strong>, <strong>SMACSS</strong>, <strong>LESS</strong>, <strong>Bootstrap</strong>, <strong>Gulp</strong>. Люблю <strong>SVG</strong>.</p>
@@ -37,30 +37,127 @@
 
   </header>
 
-  <div class="info clearfix">
-
+  <div class="about clearfix">
     <main class="mobile-width">
-      <h1>Обо мне</h1>
-      <p>В 2013 закончила Исторический факультет СПбГУ.</p>
-      <p>В 2014 прошла базовый и продвинутый интенсивы в <a href="https://htmlacademy.ru/">HTML Academy</a>.</p>
-      <p>Посещаю конференции (митапы <a href="https://vk.com/spb_frontend">SPB Frontend</a>, <a href="http://www.profsoux.ru/">ProfsoUX</a>, <a href="http://webstandardsdays.ru/">Web Standarts Days</a>, <a href="http://frontendweekend.uwcua.com/">Front-end Weekend</a>, <a href="http://t-n-w.ru/">Frontend TALKS &amp; WORKS</a>).</p>
-      <br>
-      <p>Ещё интересуюсь типографикой, дизайном и фотографией.</p>
-      <p>Занимаюсь скалолазанием и люблю путешествовать.</p>
-      <br>
-      <p>Среди последних проектов:</p>
-      <ul>
-        <li><a href="https://github.com/katia-trifonova/ukrop">Укроп</a> (редизайн и вёрстка)</li>
-        <li><a href="http://glazbaapp.com/">Glazba</a> (дизайн и вёрстка)</li>
-        <li><a href="https://github.com/katia-trifonova/pink">Pink</a> (вёрстка)</li>
-        <li><a href="https://github.com/katia-trifonova/sedona">Sedona</a> (вёрстка)</li>
-      </ul>
-      <br>
-      <p>Больше &mdash; на <a href="https://github.com/katia-trifonova?tab=repositories">GitHub</a>.</p>
+
+      <div class="bio mobile-width">
+        <h2>Обо мне</h2>
+        <p>В 2013 закончила Исторический факультет СПбГУ.</p>
+        <p>В 2014 прошла базовый и продвинутый интенсивы в <a href="https://htmlacademy.ru/">HTML Academy</a>.</p>
+        <p>Занимаюсь вёрсткой с 2014.</p>
+        <p>Посещаю конференции (митапы <a href="https://vk.com/spb_frontend">SPB Frontend</a>, <a href="http://www.profsoux.ru/">ProfsoUX</a>, <a href="http://webstandardsdays.ru/">Web Standarts Days</a>, <a href="http://frontendweekend.uwcua.com/">Front&#8209;end Weekend</a>, <a href="http://t-n-w.ru/">Frontend TALKS &amp; WORKS</a>).</p>
+        <p>Ещё интересуюсь типографикой, дизайном и фотографией.</p>
+        <p>Занимаюсь скалолазанием и люблю путешествовать.</p>
+      </div>
+
+      <div class="portfolio">
+        <h2>Портфолио</h2>
+
+        <div class="project clearfix">
+
+            <dl class="summary">
+              <dt><a href="http://fieldscapes.ru">Fieldscapes</a></dt>
+              <dd>Галерея фотографий и аудиозаписей.</dd>
+              <dd>Идея, дизайн, вёрстка.</dd>
+            </dl>
+
+          <a href="http://fieldscapes.ru" class="screen-link">
+            <picture class="screen">
+                <source
+                    srcset="img/fieldscapes@1x.jpg 1x,
+                            img/fieldscapes@2x.jpg 2x">
+                <img
+                  src="img/fieldscapes@1x.jpg" alt="Fieldscapes">
+            </picture>
+          </a>
+
+        </div>
+
+        <div class="project clearfix">
+
+            <dl class="summary">
+              <dt><a href="https://github.com/katia-trifonova/ukrop">Укроп</a></dt>
+              <dd>Сайт кафе.</dd>
+              <dd>Редизайн и вёрстка.</dd>
+            </dl>
+
+          <a href="https://github.com/katia-trifonova/ukrop" class="screen-link">
+            <picture class="screen">
+                <source
+                    srcset="img/ukrop@1x.jpg 1x,
+                            img/ukrop@2x.jpg 2x">
+                <img
+                  src="img/ukrop@1x.jpg" alt="Укроп">
+            </picture>
+          </a>
+
+        </div>
+
+        <div class="project clearfix">
+
+            <dl class="summary">
+              <dt><a href="http://glazbaapp.com">Glazba</a></dt>
+              <dd>Лендинг для мобильного приложения.</dd>
+              <dd>Дизайн и вёрстка.</dd>
+            </dl>
+
+          <a href="http://glazbaapp.com" class="screen-link">
+            <picture class="screen">
+                <source
+                    srcset="img/glazba@1x.jpg 1x,
+                            img/glazba@2x.jpg 2x">
+                <img
+                  src="img/glazba@1x.jpg" alt="Glazba">
+            </picture>
+          </a>
+
+        </div>
+
+        <div class="project clearfix">
+
+            <dl class="summary">
+              <dt><a href="https://github.com/katia-trifonova/sedona">Sedona</a></dt>
+              <dd>Лендинг для курортного города.</dd>
+              <dd>Вёрстка.</dd>
+            </dl>
+
+          <a href="https://github.com/katia-trifonova/sedona" class="screen-link">
+            <picture class="screen">
+                <source
+                    srcset="img/sedona@1x.jpg 1x,
+                            img/sedona@2x.jpg 2x">
+                <img
+                  src="img/sedona@1x.jpg" alt="Sedona">
+            </picture>
+          </a>
+
+        </div>
+
+        <div class="project clearfix">
+
+            <dl class="summary">
+              <dt><a href="https://github.com/katia-trifonova/pink">Pink</a></dt>
+              <dd>Лендинг для мобильного приложения.</dd>
+              <dd>Вёрстка.</dd>
+            </dl>
+
+          <a href="https://github.com/katia-trifonova/pink" class="screen-link">
+            <picture class="screen">
+                <source
+                    srcset="img/pink@1x.jpg 1x,
+                            img/pink@2x.jpg 2x">
+                <img
+                  src="img/pink@1x.jpg" alt="Pink">
+            </picture>
+          </a>
+
+        </div>
+      </div>
+
     </main>
 
     <aside class="mobile-width">
-      <h1>Читаю</h1>
+      <h2>Читаю</h2>
       <ul>
         <li><a href="http://alistapart.com">A List Apart</a></li>
         <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
@@ -78,8 +175,8 @@
         <li>...и многое другое</li>
       </ul>
     </aside>
-
   </div>
+
   <footer class="clearfix">
     <div class="social mobile-width">
       <a class="icon-link" href="https://www.facebook.com/trifonova.katia"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"><path fill="#AA2A53" d="M25 4.167c0-2.188-1.977-4.167-4.167-4.167h-16.666c-2.19 0-4.167 1.979-4.167 4.167v16.666c0 2.188 1.977 4.167 4.167 4.167h8.333v-9.443h-3.057v-4.168h3.057v-1.623c0-2.8 2.104-5.32 4.688-5.32h3.369v4.166h-3.369c-.369 0-.799.447-.799 1.119v1.66h4.168v4.166h-4.168v9.443h4.444c2.19 0 4.167-1.979 4.167-4.167v-16.666z"/></svg></a>
