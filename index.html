@@ -15,16 +15,24 @@
   <header class="clearfix">
 
     <picture class="photo mobile-width">
+
+
+      <source
+          media="screen and (min-width: 1200px)"
+          srcset="img/photo3x2@2x.jpg">
+
+      <source
+          media="screen and (min-width: 961px)"
+          srcset="img/photo1x1@1x.jpg 1x,
+                  img/photo1x1@2x.jpg 2x">
+
       <source
           media="(max-width: 960px)"
           srcset="img/photo3x2@1x.jpg 1x,
                   img/photo3x2@2x.jpg 2x">
-      <source
-          media="(min-width: 961px)"
-          srcset="img/photo1x1@1x.jpg 1x,
-                  img/photo1x1@2x.jpg 2x">
-        <img
-          src="img/photo1x1@2x.jpg" alt="Katia Trifonova">
+
+      <img
+          src="img/photo1x1@1x.jpg" alt="Katia Trifonova">
     </picture>
 
     <div class="skills mobile-width">
