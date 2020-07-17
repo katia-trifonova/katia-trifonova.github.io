@@ -1,0 +1,385 @@
+.about {
+  max-width: 800px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 6em;
+  padding-bottom: 8em;
+}
+@media screen and (max-width: 500px) {
+  .about {
+    padding-top: 3em;
+    padding-bottom: 4em;
+  }
+}
+.about__txt {
+  max-width: 750px;
+  font-family: Helvetica, sans-serif;
+  color: #444;
+  padding-right: 2em;
+  padding-left: 2em;
+  line-height: 1.5;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media screen and (max-width: 500px) {
+  .about__txt {
+    font-size: 14px;
+  }
+}
+.audio {
+  height: 20vh;
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 2em;
+  padding-bottom: 3em;
+  text-align: center;
+}
+@media screen and (max-width: 700px) {
+  .audio {
+    height: auto;
+  }
+}
+audio {
+  width: 70%;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  color: #444;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  min-width: 340px;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.border {
+  overflow-x: hidden;
+  background-color: #eee;
+  padding-top: 3em;
+  position: relative;
+  height: 80px;
+}
+
+.border__chick {
+  height: 80px;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+
+@media screen and (max-width: 800px) {
+  .border {
+    display: none;
+  }
+}
+
+.border__chick01 {
+  transform: translateX(-10%);
+  animation: move01 60s linear infinite;
+}
+.border__chick02 {
+  transform: translateX(100%);
+  animation: move02 60s linear infinite;
+}
+
+
+.border__chick-inner {
+  height: 80px;
+  width: 80px;
+  background-position-y: 8px;
+  background-repeat: no-repeat;
+  background-size: 560px 80px;
+}
+
+
+
+.border__chick-inner01 {
+  background-image: url("../img/chick-sprite.svg");
+  animation: goChicky .7s steps(6) infinite;
+}
+
+.border__chick-inner02 {
+  background-image: url("../img/chick-sprite-back.svg");
+  animation: goChicky .7s steps(6) infinite;
+}
+
+
+@keyframes goChicky {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: 100%;
+  }
+}
+
+
+@keyframes move01 {
+  0% {
+    transform: translateX(-10%);
+  }
+
+  50% {
+    transform: translateX(105%);
+  }
+
+  100% {
+    transform: translateX(105%);
+  }
+}
+
+@keyframes move02 {
+  0% {
+    transform: translateX(105%);
+  }
+
+  50% {
+    transform: translateX(105%);
+  }
+
+  100% {
+    transform: translateX(-20%);
+  }
+}
+
+
+.footer {
+  background-color: #fff;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+  text-align: center;
+}
+.footer__link {
+  font-family: Helvetica, sans-serif;
+  color: #008000;
+  text-decoration: none;
+}
+.gallery-wrapper {
+  background-color: #eee;
+}
+.gallery {
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 6em;
+  padding-top: 6em;
+}
+@media screen and (max-width: 800px) {
+  .gallery {
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 700px) {
+  .gallery {
+    padding-top: 4em;
+  }
+}
+@media screen and (max-width: 500px) {
+  .gallery {
+    padding-bottom: 0;
+    padding-top: 3em;
+  }
+}
+.gallery__link {
+  display: block;
+  float: left;
+  margin: 0;
+  width: 33.333333%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+@media screen and (max-width: 700px) {
+  .gallery__link {
+    width: 100%;
+    height: 500px;
+    pointer-events: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .gallery__link {
+    height: 300px;
+  }
+}
+.gallery__link_tree {
+  background-image: url("../pic/thumb/tree.jpg");
+}
+.gallery__link_leaf {
+  background-image: url("../pic/thumb/leaf.jpg");
+}
+.gallery__link_garden {
+  background-image: url("../pic/thumb/garden.jpg");
+}
+.gallery__link_chicken {
+  background-image: url("../pic/thumb/chicken.jpg");
+}
+.gallery__link_alder {
+  background-image: url("../pic/thumb/alder.jpg");
+}
+.gallery__link_dog-eat {
+  background-image: url("../pic/thumb/dog-eat.jpg");
+}
+.gallery__link_garden02 {
+  background-image: url("../pic/thumb/garden02.jpg");
+}
+.gallery__link_dog-weed {
+  background-image: url("../pic/thumb/dog-weed.jpg");
+}
+.gallery__link_fog {
+  background-image: url("../pic/thumb/fog.jpg");
+}
+.gallery__link_tree {
+  background-image: url("../pic/thumb/tree.jpg");
+}
+.gallery__link_kitchen {
+  background-image: url("../pic/thumb/kitchen.jpg");
+}
+.gallery__link_land {
+  background-image: url("../pic/thumb/land.jpg");
+}
+.gallery__link_rainy-field {
+  background-image: url("../pic/thumb/rainy-field.jpg");
+}
+.gallery__link_weed {
+  background-image: url("../pic/thumb/weed.jpg");
+}
+.gallery__link_sunny {
+  background-image: url("../pic/thumb/sunny.jpg");
+}
+.gallery__link_yellow {
+  background-image: url("../pic/thumb/yellow.jpg");
+}
+@media screen and (max-width: 700px) {
+  .gallery__link_tree {
+    background-image: url("../pic/tree.jpg");
+  }
+  .gallery__link_leaf {
+    background-image: url("../pic/leaf.jpg");
+  }
+  .gallery__link_garden {
+    background-image: url("../pic/garden.jpg");
+  }
+  .gallery__link_chicken {
+    display: none;
+  }
+  .gallery__link_alder {
+    background-image: url("../pic/alder.jpg");
+  }
+  .gallery__link_dog-eat {
+    background-image: url("../pic/dog-eat.jpg");
+  }
+  .gallery__link_garden02 {
+    background-image: url("../pic/garden02.jpg");
+  }
+  .gallery__link_dog-weed {
+    display: none;
+  }
+  .gallery__link_fog {
+    background-image: url("../pic/fog.jpg");
+  }
+  .gallery__link_kitchen {
+    display: none;
+  }
+  .gallery__link_land {
+    background-image: url("../pic/land.jpg");
+  }
+  .gallery__link_rainy-field {
+    display: none;
+  }
+  .gallery__link_weed {
+    background-image: url("../pic/weed.jpg");
+  }
+  .gallery__link_sunny {
+    background-image: url("../pic/sunny.jpg");
+  }
+  .gallery__link_yellow {
+    display: none;
+  }
+}
+.icon {
+  padding-top: 3em;
+  padding-bottom: 2em;
+  font-size: 48px;
+  text-align: center;
+}
+.intro {
+  height: 100vh;
+}
+.pic {
+  height: 80vh;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+}
+@media screen and (max-width: 700px) {
+  .pic {
+    height: 500px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .pic {
+    height: 300px;
+  }
+}
+.kitchen {
+  background-image: url("../pic/kitchen.jpg");
+}
+.chicken {
+  background-image: url("../pic/chicks.jpg");
+}
+.birds {
+  background-image: url("../pic/yellow.jpg");
+}
+.rain {
+  background-image: url("../pic/rainy-field.jpg");
+}
+.village {
+  background-image: url("../pic/village.jpg");
+}
+.dog-weed {
+  background-image: url("../pic/dog-weed.jpg");
+}
+.title {
+  font-family: 'bentham', serif;
+  text-align: center;
+  font-size: 78px;
+  font-weight: normal;
+  color: #444;
+  margin: 0;
+}
+.title_intro {
+  padding-top: 20vh;
+  letter-spacing: 0.02em;
+}
+.title_about {
+  padding-bottom: 24px;
+}
+.title_gallery {
+  padding-bottom: 1em;
+}
+@media screen and (max-width: 500px) {
+  .title {
+    font-size: 48px;
+  }
+  .title_about {
+    padding-bottom: 14px;
+  }
+}

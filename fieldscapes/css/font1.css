@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'henri_didot';
+    src: url('../font/henrididot-webfont.eot');
+    src: url('../font/henrididot-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/henrididot-webfont.woff2') format('woff2'),
+         url('../font/henrididot-webfont.woff') format('woff'),
+         url('../font/henrididot-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

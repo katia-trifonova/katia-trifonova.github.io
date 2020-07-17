@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>d3 bars</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+.visual {
+   box-sizing: border-box;
+  transform: translateZ(0);
+  min-height: calc(100vh - 90px);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+ 
+
+button {
+  margin-top: 50px;
+  height: 40px;
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+
+<button>play</button>
+  <div class="visual">
+  </div>
+  
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+
+<script>
+  
+  "use strict";
+
+//        AUDIO       //
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+let audioElement = new Audio();
+audioElement.src = `../../media/32.mp3`;
+
+let audioSrc = audioCtx.createMediaElementSource(audioElement);
+
+const amount = 100,
+  fData = new Uint8Array(amount),
+  analyser = audioCtx.createAnalyser();
+analyser.fftSize = 2048;
+audioSrc.connect(analyser);
+audioSrc.connect(audioCtx.destination);
+
+let audioVisual;
+const w = window.innerWidth,
+  h = (window.innerHeight - 90),
+  padding = 1;
+
+
+//      UI      //
+const trigger = document.querySelector("button");
+function startTheShow() {
+  if (audioElement.paused) {
+    playTrack();
+  } else {
+    pauseTrack();
+  }
+}
+function playTrack() {
+  audioElement.play();
+  audioVisual = requestAnimationFrame(renderChart);
+  trigger.innerHTML = "pause";
+}
+function pauseTrack() {
+  audioElement.pause();
+  cancelAnimationFrame(audioVisual); 
+  trigger.innerHTML = "play";
+}
+function toStart() {
+  trigger.innerHTML = "play";
+  audioElement.currentTime = 0;
+  cancelAnimationFrame(audioVisual); 
+}
+trigger.addEventListener("click", startTheShow.bind(this));
+audioElement.addEventListener("ended", toStart.bind(this));
+
+
+
+
+//        D3        //
+let svgContainer = d3
+  .select(".visual")
+  .append("svg")
+  .attr("class", "bars-wrap")
+  .attr("height", h)
+  .attr("width", w);
+
+svgContainer.selectAll('rect')
+   .data(fData)
+   .attr("class", "bar")
+   .enter()
+   .append('rect')
+   .attr('x', function (d, i) {
+      return i * (w / fData.length);
+   })
+   .attr('width', w / fData.length - padding);
+
+
+
+function renderChart() {
+  audioVisual = requestAnimationFrame(renderChart);
+  analyser.getByteFrequencyData(fData);
+
+  svgContainer.selectAll('rect')
+      .data(fData)
+      .attr('y', function(d) {
+         return h - d;
+      })
+      .attr('height', function(d) {
+         return d*2.4;
+      })
+      .attr('fill', function(d) {
+         return `rgb( 255, ${255 - d}, ${ 255 - d} )`;
+      })
+      .transition()
+        .duration(100)
+        .attr("height", function(d) {
+         return d*2.4})
+        .attr('y', function(d) {
+         return h - d*2.4;
+      })
+
+}
+
+
+
+
+</script>
+</body>
+</html>

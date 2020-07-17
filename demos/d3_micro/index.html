@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>d3 fancy lines microphone</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+}
+
+.visual {
+   box-sizing: border-box;
+  transform: translateZ(0);
+  min-height: calc(100vh - 90px);
+  width: 100%;
+  display: flex;
+  margin-left: -20px;
+}
+ 
+
+button {
+  margin-top: 50px;
+  height: 40px;
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+
+<button>rec</button>
+  <div class="visual">
+  </div>
+  
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+
+<script>
+  
+  "use strict";
+
+//        AUDIO       //
+
+let audioElement = new Audio();
+audioElement.src = `../../media/08.mp3`;
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// let audioSrc = audioCtx.createMediaElementSource(audioElement);
+let mediaStream, audioSrc = null;
+// const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true }),
+      // audioSrc = audioCtx.createMediaStreamSource(mediaStream);
+
+const pointAmount = 50,
+  fData = new Uint8Array(pointAmount);
+
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 2048;
+// audioSrc.connect(analyser);
+// audioSrc.connect(audioCtx.destination);
+
+let audioVisual;
+const w = window.innerWidth + 50,
+  h = window.innerHeight/2;
+
+
+//      UI      //
+const trigger = document.querySelector("button");
+// function startTheShow() {
+//   if (audioElement.paused) {
+//     playTrack();
+//   } else {
+//     pauseTrack();
+//   }
+// }
+// function playTrack() {
+//   audioElement.play();
+//   audioVisual = requestAnimationFrame(renderChart);
+//   trigger.innerHTML = "pause";
+// }
+// function pauseTrack() {
+//   audioElement.pause();
+//   cancelAnimationFrame(audioVisual); 
+//   trigger.innerHTML = "play";
+// }
+// function toStart() {
+//   trigger.innerHTML = "play";
+//   audioElement.currentTime = 0;
+//   cancelAnimationFrame(audioVisual); 
+// }
+
+
+function startTheShow() {
+  if (audioSrc === null) {
+    startRec();
+    audioVisual = requestAnimationFrame(renderChart);
+    trigger.innerHTML = "stop";
+  } else {
+    stopRec();
+    cancelAnimationFrame(audioVisual);
+    trigger.innerHTML = "rec"; 
+  }
+}
+async function startRec() {
+   
+    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioSrc = audioCtx.createMediaStreamSource(mediaStream);
+    // audioSrc.connect(audioCtx.destination);
+    audioSrc.connect(analyser);
+}
+
+function stopRec() {
+  mediaStream.getTracks().forEach(track => track.stop());
+  audioSrc.disconnect();
+  audioSrc = null;
+  
+}
+
+
+trigger.addEventListener("click", startTheShow.bind(this));
+// audioElement.addEventListener("ended", toStart.bind(this));
+
+
+
+
+//        D3        //
+let svgContainer = d3
+  .select(".visual")
+  .append("svg")
+  .attr("class", "line-wrap")
+  .attr("height", h)
+  .attr("width", w+100);
+
+svgContainer.append("path").attr("fill", "none").attr("class", "line1").attr("stroke", "#00ffff").attr("stroke-width", 2);
+svgContainer.append("path").attr("fill", "none").attr("class", "line2").attr("stroke", "#dd00dd").attr("stroke-width", 3);;
+svgContainer.append("path").attr("fill", "none").attr("class", "line3").attr("stroke", "#fff").attr("stroke-width", 1);;
+svgContainer.append("path").attr("fill", "none").attr("class", "line4").attr("stroke", "#f295a3").attr("stroke-width", 2);;
+
+function renderChart() {
+  audioVisual = requestAnimationFrame(renderChart);
+  analyser.getByteFrequencyData(fData);
+  let fDataArr = Array.from(fData);
+
+  let xyArr1 = fDataArr.map((item, i) => [
+    w / pointAmount * i,
+    h - (item * 1.2 + 2)
+  ]);
+
+  let xyArr2 = fDataArr.map((item, i) => [
+    w / pointAmount * i,
+    h - (item / 2)
+  ]);
+
+  let xyArr3 = fDataArr.map((item, i) => [
+    w / pointAmount * i,
+    h - (item /1.2)
+  ]);
+
+  let xyArr4 = fDataArr.map((item, i) => [
+    w / pointAmount * i,
+    h - (item)
+  ]);
+
+
+  var lineGenerator = d3.line().curve(d3.curveCardinal);
+
+  let genData1 = lineGenerator(xyArr1);
+  let genData2 = lineGenerator(xyArr2);
+  let genData3 = lineGenerator(xyArr3);
+  let genData4 = lineGenerator(xyArr4);
+
+  console.log(genData1);
+
+  svgContainer
+    .select(".line1")
+    .attr("d", genData1)
+    .transition()
+    .duration(80)
+    .attr("d", genData1);
+
+  svgContainer
+    .select(".line2")
+    .attr("d", genData2)
+    .transition()
+    .duration(80)
+    .attr("d", genData2);
+
+  svgContainer
+    .select(".line3")
+    .attr("d", genData3)
+    .transition()
+    .duration(80)
+    .attr("d", genData3);
+
+  svgContainer
+    .select(".line4")
+    .attr("d", genData4)
+    .transition()
+    .duration(80)
+    .attr("d", genData4);
+
+}
+
+</script>
+</body>
+</html>

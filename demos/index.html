@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>audiovisual demos</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/png" href="../images/favicon.png" />
+  <style>
+    
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  background-color: #222;
+
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+section {
+  margin-bottom: .5em;
+  text-align: center;
+}
+
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover, a:active {
+  text-decoration: underline;
+}
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h2 {
+  margin-bottom: .5em;
+  font-size: 48px;
+  text-align: left;
+  color: #fff;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  max-width: 960px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 980px) {
+  ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  ul {
+    grid-template-columns: 1fr;
+  }
+}
+.label {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.6);
+  border-radius: 50%;
+  /*transform: translateY(100%);*/
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+  transition: all .3s;
+  color: #fff;
+  transform: scale(0);
+}
+
+.label .ff {
+  margin-top: 2px;
+  font-size: 8px;
+  display: block;
+}
+
+a {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  transition: all .3s;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+}
+
+a:hover {
+  transform: scale(1.03);
+}
+
+a:hover img {
+  transform: scale(1.2);
+}
+
+a:hover .label {
+
+  transform: scale(1.5);
+  
+}
+
+
+img {
+  width: 100%;
+  display: block;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+}
+
+  </style>
+
+</head>
+<body>
+  
+  <section>
+  <h2>&lt;div&gt;</h2>
+
+<ul>
+  <li><a href="./div_bars" ><img src="./previews/div_bars.jpg" alt="no preview">
+      <div class="label">bars</div>
+    </a>
+  </li>
+  <li><a href="./div_rays" >
+    <img src="./previews/div_radial.jpg" alt="no preview">
+    <div class="label">rays</div>
+    </a></li>
+  <li>
+    <a href="./div_flower" >
+      <img src="./previews/div_flower.jpg" alt="no preview">
+      <div class="label">flower</div>
+    </a>
+  </li>
+  <li>
+    <a href="./div_magic_flower" >
+      <img src="./previews/div_flower2.jpg" alt="no preview">
+      <div class="label">magic flower</div>
+    </a>
+  </li>
+  <li><a href="./div_goo" >
+        <img src="./previews/div_goo.jpg" alt="no preview">
+        <div class="label">bubble gum</div>
+      </a>
+  </li>
+</ul>
+</section>
+
+<section>
+  <h2>SVG</h2>
+  <ul>
+    <li><a href="./svg_bars">
+          <img src="./previews/svg_bars.jpg" alt="no preview">
+          <div class="label">bars</div></a></li>
+    <li><a href="./svg_wide_bars">
+          <img src="./previews/svg_wide.jpg" alt="no preview">
+          <div class="label">wide bars</div></a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>D3.js</h2>
+<ul>
+  <li><a href="./d3_bars" >
+        <img src="./previews/d3_bars.jpg" alt="no preview">
+        <div class="label">bars</div></a></li>
+  <li><a href="./d3_slow_bars" >
+    <img src="./previews/d3_slow.jpg" alt="no preview">
+        <div class="label">slow bars</div></a></li>
+  <li><a href="./d3_line" >
+        <img src="./previews/d3_line.jpg" alt="no preview">
+        <div class="label">line</div>
+      </a>
+  </li>
+  <li><a href="./d3_fancy_lines" >
+        <img src="./previews/d3_fancy_lines.jpg" alt="no preview">
+          <div class="label">multiple line</div>
+      </a>
+  </li>
+  <li><a href="./d3_micro" >
+        <img src="./previews/d3_micro.jpg" alt="no preview">
+        <div class="label">microphone <br> <span class="ff">(works in Firefox)</span></div>
+      </a>
+  </li>
+</ul>
+</section>
+
+
+<!-- <section>
+  <h2>canvas</h2>
+<ul>
+  <li><a href="https://soniaboller.github.io/audible-visuals/" >Sonia Boller</a></li>
+  <li><a href="http://hughsk.io/moire-1/" >Hugh Kennedy</a></li>
+  <li><a href="http://www.patatap.com/" >Jono Brandel</a></li>
+<li><a href="https://codepen.io/pat_hg/pen/zvMrRJ/" >Patrick Heng</a></li>
+
+</ul>
+</section> -->
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>maribou state</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            background-color: #000;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        a {
+            color: #0078ff;
+        }
+
+        button {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            margin-left: -30px;
+            width: 60px;
+            border: 1px solid #000;
+            background-color: #fff;
+            color: #000;
+            display: block;
+            cursor: pointer;
+            -webkit-transition: color .3s;
+            -moz-transition: color .3s;
+            -ms-transition: color .3s;
+            -o-transition: color .3s;
+            transition: color .3s;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<button>start</button>
+
+<script src="./three.js"></script>
+
+<script>
+
+  //        AUDIO       //
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioElement = new Audio();
+  audioElement.src = './maribou.mp3';
+  let audioSrc = audioCtx.createMediaElementSource(audioElement);
+  let wi = window.innerWidth;
+  let h = window.innerHeight;
+
+  const amount = 200,
+    fData = new Uint8Array(amount),
+    analyser = audioCtx.createAnalyser();
+  audioSrc.connect(analyser);
+  // analyser.fftSize = 256;
+  audioSrc.connect(audioCtx.destination);
+  let audioVisual;
+
+  //      UI      //
+  const trigger = document.querySelector("button");
+
+  function startTheShow() {
+    if (audioElement.paused) {
+      playTrack();
+    } else {
+      pauseTrack();
+    }
+  }
+
+  function playTrack() {
+    audioElement.play();
+    trigger.innerHTML = "pause";
+  }
+
+  function pauseTrack() {
+    audioElement.pause();
+    trigger.innerHTML = "play";
+  }
+
+  function toStart() {
+    trigger.innerHTML = "play";
+    audioElement.currentTime = 0;
+
+    const children = group.children;
+    for (let i = 0; i < amount; i++) {
+      const child = children[i];
+      child.material.color = new THREE.Color(Math.random() * 0xcccccc);
+    }
+  }
+
+
+  trigger.addEventListener("click", startTheShow.bind(this));
+  audioElement.addEventListener("ended", toStart.bind(this));
+
+  //  VISUALS
+  let container;
+  let camera, scene, renderer, group;
+  let mouseX = 0, mouseY = 0;
+
+  let windowHalfX = window.innerWidth / 2;
+  let windowHalfY = window.innerHeight / 2;
+
+
+  init();
+  animate();
+
+  function init() {
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2500);
+    camera.position.z = 1000;
+    scene.add(camera);
+
+
+    renderer = new THREE.WebGLRenderer({alpha: true});
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(new THREE.Color(0x000000));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    // renderer.shadowMapEnabled = true;
+    group = new THREE.Group();
+    scene.add(group);
+
+    var ambientLight = new THREE.AmbientLight(0xaaaaaa);
+    scene.add(ambientLight);
+
+    // add spotlight for the shadows
+    var spotLight = new THREE.SpotLight(0xaaaaaa);
+    spotLight.position.set(2000, 2000, 2000);
+    spotLight.castShadow = true;
+    scene.add(spotLight);
+
+    var spotLight2 = new THREE.SpotLight(0xcccccc);
+    spotLight2.position.set(1000, 1000, 1000);
+    scene.add(spotLight2);
+
+    for (var i = 0; i < amount; i++) {
+      addCube();
+    }
+
+    container.appendChild(renderer.domElement);
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('touchstart', onDocumentTouchStart, false);
+    document.addEventListener('touchmove', onDocumentTouchMove, false);
+    window.addEventListener('resize', onWindowResize, false);
+  }
+
+  function addCube() {
+
+    var cubeSize = 1;
+    var texture = new THREE.TextureLoader().load("./sand2.jpg");
+
+    var cubeGeometry = new THREE.SphereGeometry(cubeSize, 32, 32);
+    var cubeMaterial = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, map: texture});
+
+
+    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube.castShadow = true;
+    cube.name = "cube-" + scene.children.length;
+
+    // position the cube randomly in the scene
+    cube.position.x = Math.random() * 1000 - 500;
+    cube.position.y = Math.random() * 1000 - 500;
+    cube.position.z = Math.random() * 1000 - 500;
+
+    // add the cube to the scene
+    group.add(cube);
+    // this.numberOfObjects = scene.children.length;
+  };
+
+  function onWindowResize() {
+
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+  }
+
+  //
+
+  function onDocumentMouseMove(event) {
+
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+  }
+
+  function onDocumentTouchStart(event) {
+
+    if (event.touches.length === 1) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[0].pageX - windowHalfX;
+      mouseY = event.touches[0].pageY - windowHalfY;
+
+    }
+  }
+
+  function onDocumentTouchMove(event) {
+
+    if (event.touches.length === 1) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[0].pageX - windowHalfX;
+      mouseY = event.touches[0].pageY - windowHalfY;
+    }
+  }
+
+  //
+
+  function animate() {
+    analyser.getByteFrequencyData(fData);
+    const children = group.children;
+
+    for (let i = 0; i < amount; i++) {
+      const child = children[i];
+      if (fData[i] < 3) {
+        child.scale.x = child.scale.y = child.scale.z = 3;
+      } else {
+        child.scale.x = child.scale.y = child.scale.z = fData[i] / 5;
+      }
+
+      if (!audioElement.paused) {
+        if (audioElement.currentTime < 150) {
+          child.material.color = new THREE.Color(`hsl(${fData[i] * 1.5}, 50%, 50%)`);
+        }
+        if (audioElement.currentTime >= 150 && audioElement.currentTime < 210.06) {
+          let clearCol = renderer.getClearColor();
+          renderer.setClearColor(new THREE.Color(clearCol.r + 0.00002, clearCol.g + 0.00002, clearCol.b + 0.00002));
+        }
+        if (audioElement.currentTime >= 157.7 && audioElement.currentTime < 210.06) {
+          child.material.color = new THREE.Color('hsl(0, 50%, 50%)');
+          renderer.setClearColor(new THREE.Color(0xffffff));
+        }
+        if (audioElement.currentTime >= 210.06) {
+          renderer.setClearColor(new THREE.Color(0x000000));
+          child.material.color = new THREE.Color(`hsl(${fData[i] * 1.5}, 50%, 50%)`);
+        }
+        if (audioElement.currentTime >= 211) {
+          child.material.color = new THREE.Color(`hsl(${fData[i] * 1.5}, 50%, 50%)`);
+        }
+      }
+    }
+
+
+    requestAnimationFrame(animate);
+
+    render();
+
+  }
+
+  function render() {
+
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    group.rotation.x += 0.005;
+    // group.rotation.y += 0.02;
+
+    renderer.render(scene, camera);
+
+  }
+
+
+</script>
+</body>
+</html>

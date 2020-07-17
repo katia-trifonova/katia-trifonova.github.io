@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>text to line transformer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+
+  <style>
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      -moz-flex-direction: column;
+      -ms-flex-direction: column;
+      -o-flex-direction: column;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .text {
+      resize: none;
+      background-color: #cefff8;
+      width: 100%;
+      color: #333;
+      font-family: sans-serif;
+      font-size: 22px;
+      height: 15vh;
+      border: none;
+      outline: none;
+      color: #056053;
+    }
+
+    .text::placeholder {
+      color: #8dddd0;
+    }
+
+    .text-wrap {
+      background-color: #cefff8;
+      padding: 20px;
+      margin-bottom: 1em;
+    }
+
+    .submit {
+      min-width: 10em;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #259685;
+      border-radius: 0;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-family: sans-serif;
+      padding: 15px;
+      -webkit-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .line-wrap {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .submit:hover,
+    .submit:active {
+      background-color: #056053;
+    }
+
+
+
+    .line {
+      transition: all .3s;
+      animation: dash 1s ease-in forwards;
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="text-wrap">
+    <textarea value="" maxlength="200" placeholder="your message here (max. 200 characters)" name="text" class="text">
+    </textarea>
+  </div>
+  <button class="submit">visualize this</button>
+  <div class="visual"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+  <script src="https://d3js.org/d3-transition.v1.min.js"></script>
+  <script>
+    'use strict';
+
+    const text = document.querySelector('.text'),
+      container = document.querySelector('.visual'),
+      linewrap = document.querySelector('.line-wrap'),
+      colors = ['#EA1070', '#EAC03C', '#007DB0', '#252B7F', '#FF6040', '#3abca9'],
+      button = document.querySelector('.submit');
+    text.value = "";
+    let wordArr, charArr, valueArr, svgContainer;
+    const w = window.innerWidth - window.innerWidth * 0.05,
+      h = window.innerHeight / 2;
+    button.addEventListener("click", startTheShow.bind(this));
+    document.addEventListener("keydown", onKeyPress.bind(this));
+    text.focus();
+
+
+    function startTheShow() {
+      if (text.value !== "") {
+        clear();
+        init();
+        drawAll();
+      }
+    }
+
+    function onKeyPress(e) {
+      if (e.keyCode === 13 && text === document.activeElement) {
+        e.preventDefault();
+        startTheShow();
+      }
+    }
+
+    function clear() {
+      if (svgContainer) {
+        svgContainer.remove();
+      }
+    }
+
+    function init() {
+      wordArr = text.value.split(" ");
+
+      charArr = wordArr.map(item => {
+        return item = item.split("");
+      });
+
+      valueArr = charArr.map(item => {
+        return item = item.map(char => (char = char.charCodeAt(0)))
+      })
+
+      // console.log(wordArr, valueArr); 
+
+      svgContainer = d3.select(".visual")
+        .append("svg")
+        .attr("class", "line-wrap")
+        .attr("height", h + 100)
+        .attr("width", w);
+    }
+
+    function getValue(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function newPath(index) {
+      let color = colors[Math.round(Math.random() * 6 - 0.5)];
+
+      let stroke = getValue(1, 15);
+      let opacity = 1 - stroke / 15;
+      if (opacity < 0.1) opacity = 0.1; 
+      
+
+      svgContainer.append("path")
+        .attr("fill", "none")
+        .attr("stroke-width", stroke)
+        .attr("stroke", color)
+        .attr("opacity", opacity)
+        .attr("class", `path${index}`)
+        .attr("id", `path${index}`)
+    }
+
+    function drawAll() {
+      for (let i = 0; i < valueArr.length; i++) {
+        newPath(i);
+        draw(i, valueArr[i]);
+      }
+    }
+
+    function draw(index, arr) {
+
+      let xy = arr.map((item, i) => [
+        w / arr.length * (i + 0.5),
+        item
+      ]);
+
+
+      let max = d3.max(xy, function (d) {
+        return d[1];
+      });
+      let min = d3.min(xy, function (d) {
+        return d[1];
+      });
+
+      let yScale = d3.scaleLinear()
+        .domain([min, max])
+        .range([0, h]);
+
+      let xyArr = xy.map((item, i) => item = [item[0], h - yScale(item[1]) + 50]);
+      let lineGenerator = d3.line().curve(d3.curveCardinal);
+      let genData = lineGenerator(xyArr);
+
+      let thisPath = svgContainer.select(`.path${index}`)
+        .attr("d", genData)
+        .attr("class", "line")
+        .attr("stroke-linecap", "round")
+
+      let lineSize = thisPath.node().getTotalLength().toString();
+      thisPath.style('stroke-dashoffset', lineSize);
+      thisPath.style('stroke-dasharray', lineSize);
+
+    }
+
+  </script>
+</body>
+
+</html>

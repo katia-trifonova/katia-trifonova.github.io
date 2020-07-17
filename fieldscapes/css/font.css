@@ -1,0 +1,14 @@
+
+
+@font-face {
+    font-family: 'anglecia';
+    src: url('../font/AngleciaProDisplay-Regular-webfont.eot');
+    src: url('../font/AngleciaProDisplay-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/AngleciaProDisplay-Regular-webfont.woff2') format('woff2'),
+         url('../font/AngleciaProDisplay-Regular-webfont.woff') format('woff'),
+         url('../font/AngleciaProDisplay-Regular-webfont.ttf') format('truetype'),
+         url('../font/AngleciaProDisplay-Regular-webfont.svg#anglecia_pro_dspregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

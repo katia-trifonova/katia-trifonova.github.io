@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>roosvelt</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        a {
+            color:#0078ff;
+        }
+
+        button {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            margin-left: -30px;
+            width: 60px;
+            border: 1px solid #000;
+            background-color: #fff;
+            color: #000;
+            display: block;
+            cursor: pointer;
+            -webkit-transition: color .3s;
+            -moz-transition: color .3s;
+            -ms-transition: color .3s;
+            -o-transition: color .3s;
+            transition: color .3s;
+        }
+        button:focus { outline: none; }
+
+        button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<button>start</button>
+
+<script src="three.js"></script>
+<script src="Projector.js"></script>
+<script src="CanvasRenderer.js"></script>
+
+<script>
+
+  //        AUDIO       //
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioElement = new Audio();
+  audioElement.src = './roos.mp3';
+  let audioSrc = audioCtx.createMediaElementSource(audioElement);
+  let wi = window.innerWidth;
+  let h = window.innerHeight;
+
+  const amount = 200,
+    fData = new Uint8Array(amount),
+    analyser = audioCtx.createAnalyser();
+  audioSrc.connect(analyser);
+  // analyser.fftSize = 256;
+  audioSrc.connect(audioCtx.destination);
+  let audioVisual;
+
+  //      UI      //
+  const trigger = document.querySelector("button");
+  function startTheShow() {
+    if (audioElement.paused) {
+      playTrack();
+    } else {
+      pauseTrack();
+    }
+  }
+  function playTrack() {
+    audioElement.play();
+    trigger.innerHTML = "pause";
+  }
+  function pauseTrack() {
+    audioElement.pause();
+    trigger.innerHTML = "play";
+  }
+  function toStart() {
+    trigger.innerHTML = "play";
+    audioElement.currentTime = 0;
+  }
+
+
+  trigger.addEventListener("click", startTheShow.bind(this));
+  audioElement.addEventListener("ended", toStart.bind(this));
+
+//  VISUALS
+  var container;
+  var camera, scene, renderer, group, particle;
+  var mouseX = 0, mouseY = 0;
+
+  var windowHalfX = window.innerWidth / 2;
+  var windowHalfY = window.innerHeight / 2;
+
+  init();
+  animate();
+
+  function init() {
+
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 3000 );
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+
+    var PI2 = Math.PI * 2;
+    var program = function ( context ) {
+
+      context.beginPath();
+      context.arc( 0, 0, 0.5, 0, PI2, true );
+      context.fill();
+
+    };
+
+    group = new THREE.Group();
+    scene.add( group );
+
+    for ( var i = 0; i < amount; i++ ) {
+
+      var material = new THREE.SpriteCanvasMaterial( {
+        color: Math.random() * 0x808008 + 0x808080,
+        program: program
+      } );
+
+      particle = new THREE.Sprite( material );
+      particle.position.x = Math.random() * 2000 - 1000;
+      particle.position.y = Math.random() * 2000 - 1000;
+      particle.position.z = Math.random() * 2000 - 1000;
+      particle.scale.x = particle.scale.y = 2;
+      group.add( particle );
+    }
+
+    renderer = new THREE.CanvasRenderer();
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    container.appendChild( renderer.domElement );
+
+
+    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+    //
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+  }
+
+  function onWindowResize() {
+
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+  }
+
+  //
+
+  function onDocumentMouseMove( event ) {
+
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+  }
+  function onDocumentTouchStart( event ) {
+
+    if ( event.touches.length === 1 ) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[ 0 ].pageX - windowHalfX;
+      mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+    }
+
+  }
+  function onDocumentTouchMove( event ) {
+
+    if ( event.touches.length === 1 ) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[ 0 ].pageX - windowHalfX;
+      mouseY = event.touches[ 0 ].pageY - windowHalfY;
+    }
+  }
+
+  //
+
+  function animate() {
+    analyser.getByteFrequencyData(fData);
+
+    for (let i = 0; i < amount; i++) {
+      const child = group.children[i];
+      if  (fData[i] === 0) {
+        child.scale.x = child.scale.y = 1;
+        child.material.color = new THREE.Color(`hsl(${fData[i]}, 50%, 50%)`);
+      } else {
+        child.scale.x = child.scale.y = fData[i]/1.5;
+        child.material.color = new THREE.Color(`hsl(${fData[i]*2}, 50%, 50%)`);
+      }
+    }
+
+    requestAnimationFrame( animate );
+
+    render();
+
+  }
+
+  function render() {
+
+    camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+    camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+    camera.lookAt( scene.position );
+
+    group.rotation.x += 0.005;
+    // group.rotation.y += 0.02;
+
+    renderer.render( scene, camera );
+
+  }
+
+</script>
+</body>
+</html>

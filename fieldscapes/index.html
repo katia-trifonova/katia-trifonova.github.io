@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fieldscapes</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font.css">
+	<link href="css/lightbox.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+	<!--preloader style-->
+	<style>
+
+		.loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 10em;
+			height: 1em;
+			margin-top: -3.5em;
+			margin-left: -5.5em;
+			text-align: center;
+			font-size: 24px;
+	    transition: opacity 1s ease-in-out;
+
+		}
+		.preloader {
+	    position: fixed;
+	    left: 0;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    background: #fff;
+	    z-index: 100500;
+	    transition: opacity 1s ease-in-out;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.spinner {
+			position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    opacity: 1;
+		  margin: 40px auto;
+		  width: 40px;
+		  height: 40px;
+		  margin-left: -40px;
+		  margin-top: -40px;
+		  text-align: center;
+	    transition: opacity 1s ease-in-out;
+		  -webkit-animation: sk-chasingDotsRotate 2s infinite linear;
+		          animation: sk-chasingDotsRotate 2s infinite linear; 
+
+		  }
+		  .spinner .dot {
+		    width: 60%;
+		    height: 60%;
+		    display: inline-block;
+		    position: absolute;
+		    top: 0;
+		    background-color: #333;
+		    border-radius: 100%;
+		    -webkit-animation: sk-chasingDotsBounce 2s infinite ease-in-out;
+		            animation: sk-chasingDotsBounce 2s infinite ease-in-out; 
+		  }
+		  .spinner .dot2 {
+		    top: auto;
+		    bottom: 0;
+		    -webkit-animation-delay: -1s;
+		            animation-delay: -1s; 
+		  }
+
+		@-webkit-keyframes sk-chasingDotsRotate {
+		  100% {
+		    -webkit-transform: rotate(360deg);
+		            transform: rotate(360deg); 
+		  }
+		}
+
+		@keyframes sk-chasingDotsRotate {
+		  100% {
+		    -webkit-transform: rotate(360deg);
+		            transform: rotate(360deg); 
+		  }
+		}
+
+		@-webkit-keyframes sk-chasingDotsBounce {
+		  0%, 100% {
+		    -webkit-transform: scale(0);
+		            transform: scale(0); 
+		  }
+		  50% {
+		    -webkit-transform: scale(1);
+		            transform: scale(1); 
+		  }
+		}
+
+		@keyframes sk-chasingDotsBounce {
+		  0%, 100% {
+		    -webkit-transform: scale(0);
+		            transform: scale(0); 
+		  }
+		  50% {
+		    -webkit-transform: scale(1);
+		            transform: scale(1); 
+		  }
+		}
+	</style>
+</head>
+<body>
+	<div class="intro parallax-window"  data-parallax="scroll" data-image-src="pic/intro.jpg">
+		<h1 class="title title_intro">&#64257;eldscapes</h1>
+	</div>
+	<div class="about">
+		<h2 class="title title_about">this is the place</h1>
+		<p class="about__txt">
+			This is the place of peace and quiet.
+		</p>
+		<p class="about__txt">
+			It feels like time has been standing still here for years and years. Life is highly slow&#8209;paced and calm.
+			There is no time to hurry.
+		</p>
+		<p class="about__txt">
+			You can find this place in the southern Russia, on the outskirts of Shakhty, a town in Rostov Oblast. The photos and field recordings were produced during May, 2014. This is an attempt to recreate the spirit of this pastoral location and let you experience it whenever your soul needs some peaceful retreat.
+		</p>
+		<p class="about__txt">
+			Well, now breathe in and enjoy being here and now.
+		</p>
+	</div>
+
+
+	<div class="pic village"></div>
+	<div class="audio">
+		<!-- <h3 class="title_track">Rainy day, cock coo-coo</h3> -->
+		<audio controls preload="none">
+			<source src="media/01-village.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<div class="pic dog-weed"></div>
+	<div class="audio">
+		<audio controls preload="none">
+			<source src="media/02-dog-weed.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<div class="pic rain"></div>
+	<div class="audio">
+		<audio controls preload="none">
+			<source src="media/03-rain.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<div class="pic chicken"></div>
+	<div class="audio">
+		<audio controls preload="none">
+			<source src="media/04-chicken.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<div class="pic kitchen"></div>
+	<div class="audio">
+		<audio controls preload="none">
+			<source src="media/05-kitchen.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<div class="pic birds"></div>
+	<div class="audio">
+		<audio controls preload="none">
+			<source src="media/06-birds.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+
+<div class="gallery-wrapper">
+
+	<div class="gallery clearfix">
+
+		<h2 class="title title_gallery">visual</h2>
+
+		<a class="gallery__link gallery__link_tree" href="pic/tree.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_leaf" href="pic/leaf.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_garden" href="pic/garden.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_chicken" href="pic/chicken.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_alder" href="pic/alder.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_dog-eat" href="pic/dog-eat.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_garden02" href="pic/garden02.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_dog-weed" href="pic/dog-weed.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_fog" href="pic/fog.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_kitchen" href="pic/kitchen.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_land" href="pic/land.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_rainy-field" href="pic/rainy-field.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_weed" href="pic/weed.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_sunny" href="pic/sunny.jpg" data-lightbox="pic"></a>
+
+		<a class="gallery__link gallery__link_yellow" href="pic/yellow.jpg" data-lightbox="pic"></a>
+
+	</div>
+</div>
+
+<div class="border">
+	
+	<div class="border__chick border__chick01">
+		<div class="border__chick-inner border__chick-inner01"></div>
+	</div>
+	<div class="border__chick border__chick02">
+		<div class="border__chick-inner border__chick-inner02"></div>
+	</div>
+
+</div>
+
+	<footer class="footer">
+		<p>made with ♥︎ by <a href="http://github.com/katia-trifonova" class="footer__link">Katia</a></p>
+	</footer>
+
+
+<!--preloader script-->
+<script>
+	(function(){
+
+		var preloader = document.createElement('div');
+		preloader.classList.add('preloader');
+		preloader.innerHTML = '<p class="loading">loading...</p><div class="spinner"><div class="dot dot1"></div><div class="dot dot2"></div></div>';
+		document.body.appendChild(preloader);
+		var spinner = preloader.querySelector('.spinner');
+		var loading = preloader.querySelector('.loading');
+
+		window.onload = function(){
+					spinner.style.opacity = '0';
+					loading.style.opacity = '0';
+
+					setTimeout(preloaderRemove, 1000);
+					setTimeout(preloaderHide, 2000);
+
+
+					function preloaderRemove(){
+						preloader.style.opacity = '0';
+					}
+					function preloaderHide(){
+						preloader.classList.add('hidden');
+					}
+		}
+	})();
+</script>
+
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/parallax.min.js"></script>
+<script src="js/lightbox.js"></script>
+<script src="js/audio.js"></script>
+
+<script>
+  lightbox.option({
+   'resizeDuration': 200,
+   'wrapAround': true,
+  'fitImagesInViewport': true,
+//   'alwaysShowNavOnTouchDevices': true
+  })
+</script>
+</body>
+</html>

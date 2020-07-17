@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>div rays</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+button {
+  margin-top: 50px;
+}
+
+.visual {
+  min-height: calc(100vh - 90px);
+  width: 100%;
+}
+
+.bar {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  height: 50px;
+  width: 1px;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+
+  </style>
+</head>
+<body>
+
+
+
+
+<button>play</button>
+  <div class="visual">
+  </div>
+  
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+
+<script>
+  
+  "use strict";
+
+//        AUDIO       //
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+let audioElement = new Audio();
+audioElement.src = `../../media/40.mp3`;
+
+let audioSrc = audioCtx.createMediaElementSource(audioElement);
+
+const amount = 100,
+  fData = new Uint8Array(amount),
+  analyser = audioCtx.createAnalyser();
+analyser.fftSize = 2048;
+audioSrc.connect(analyser);
+audioSrc.connect(audioCtx.destination);
+
+let audioVisual;
+const w = window.innerWidth,
+  h = window.innerHeight,
+  size = Math.min(w, h),
+  bars = [];
+
+
+//      UI      //
+const trigger = document.querySelector("button");
+const visual = document.querySelector(".visual");
+function startTheShow() {
+  if (audioElement.paused) {
+    playTrack();
+  } else {
+    pauseTrack();
+  }
+}
+function playTrack() {
+  audioElement.play();
+  audioVisual = requestAnimationFrame(renderChart);
+  trigger.innerHTML = "pause";
+}
+function pauseTrack() {
+  audioElement.pause();
+  cancelAnimationFrame(audioVisual); 
+  trigger.innerHTML = "play";
+}
+function toStart() {
+  trigger.innerHTML = "play";
+  audioElement.currentTime = 0;
+  cancelAnimationFrame(audioVisual); 
+}
+trigger.addEventListener("click", startTheShow.bind(this));
+audioElement.addEventListener("ended", toStart.bind(this));
+
+
+
+
+//        divs' animation        //
+
+
+function init() {
+  for (let i = 0; i < amount; i++) {
+      let div = document.createElement("div");
+      div.id = "bar-" + i;
+      div.className = "bar";
+      visual.appendChild(div);
+      bars.push(div);
+      bars[i].style.height = size / 18 + "px";
+    }
+}
+
+
+
+function renderChart() {
+  audioVisual = requestAnimationFrame(renderChart);
+  analyser.getByteFrequencyData(fData);
+
+
+// const min = Math.min.apply(Math, fData),
+//       max = Math.max.apply(Math, fData),
+//       k = max - min;
+      
+
+  for (let i = 0; i < amount; i++) {
+      let y = fData[i];
+      // y = (y - min) / k * 7;
+      let bar = bars[i];
+
+
+      if (bar) {
+        let angle = Math.PI * 2 / amount * i;
+        let deg = angle * 180 / Math.PI;
+        let hsl = `hsl( ${y} ,100%, 50%)`;
+        bar.style.transform = `rotate(${deg}deg) scaleY(${y/40})`;
+        bar.style.backgroundColor = hsl;
+      }
+    }
+}
+
+
+init();
+
+
+
+</script>
+</body>
+</html>

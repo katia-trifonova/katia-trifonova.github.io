@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>svg bars</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+button {
+  height: 40px;
+  margin-top: 50px;
+}
+
+.visual {
+  box-sizing: border-box;
+  transform: translateZ(0);
+  min-height: calc(100vh - 90px);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+}
+
+.chart {
+  width: 100%;
+  height: calc(100vh - 90px);
+  flex: 1;
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+
+<button>play</button>
+  <div class="visual">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="chart"></svg>
+  </div>
+  
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+
+<script>
+  
+  "use strict";
+
+//        AUDIO       //
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+let audioElement = new Audio();
+audioElement.src = `../../media/34.mp3`;
+
+let audioSrc = audioCtx.createMediaElementSource(audioElement);
+
+const amount = 100,
+  fData = new Uint8Array(amount),
+  analyser = audioCtx.createAnalyser();
+analyser.fftSize = 256;
+audioSrc.connect(analyser);
+audioSrc.connect(audioCtx.destination);
+
+let audioVisual;
+const w = window.innerWidth,
+  h = window.innerHeight,
+  padding = 1,
+  bars = [];
+
+
+//      UI      //
+const trigger = document.querySelector("button");
+const visual = document.querySelector(".visual");
+const chart = document.querySelector(".chart");
+function startTheShow() {
+  if (audioElement.paused) {
+    playTrack();
+  } else {
+    pauseTrack();
+  }
+}
+function playTrack() {
+  audioElement.play();
+  audioVisual = requestAnimationFrame(renderChart);
+  trigger.innerHTML = "pause";
+}
+function pauseTrack() {
+  audioElement.pause();
+  cancelAnimationFrame(audioVisual); 
+  trigger.innerHTML = "play";
+}
+function toStart() {
+  trigger.innerHTML = "play";
+  audioElement.currentTime = 0;
+  cancelAnimationFrame(audioVisual); 
+}
+trigger.addEventListener("click", startTheShow.bind(this));
+audioElement.addEventListener("ended", toStart.bind(this));
+
+
+
+
+//        divs' animation        //
+
+
+function init() {
+
+  const svgns = "http://www.w3.org/2000/svg";
+
+  for (let i = 0; i < amount; i++) {
+      let rect = document.createElementNS(svgns, "rect");
+      rect.id = "bar-" + i;
+      rect.setAttributeNS(null, "class", "bar" );
+      rect.setAttributeNS(null, "x", (i+1) * w / amount );
+      rect.setAttributeNS(null, "y", h );
+      // rect.setAttributeNS(null, "width", (i+1) * w / amount );
+      rect.setAttributeNS(null, "width", w / amount - padding);
+      rect.setAttributeNS(null, "height", h/10);
+      rect.setAttributeNS(null, "fill", "#fff");
+      chart.appendChild(rect);
+      bars.push(rect);
+
+    }
+}
+
+   
+
+
+function renderChart() {
+  audioVisual = requestAnimationFrame(renderChart);
+  analyser.getByteFrequencyData(fData);
+
+
+const min = Math.min.apply(Math, fData),
+      max = Math.max.apply(Math, fData),
+      k = max - min;
+      
+
+  for (let i = 0; i < amount; i++) {
+
+      let y = 0;
+      if (fData[i]) {
+        y = 40 * ((fData[i] - min) / k * 20 );
+      }
+
+      let bar = bars[i];
+
+
+      if (bar) {
+        const hsl = "hsl(" + fData[i] + ",100%," + 50 + "%)";
+        bar.setAttributeNS(null, "height", y);
+        bar.setAttributeNS(null, "y", h - y);
+        bar.setAttributeNS(null, "fill", hsl);
+      }
+    }
+}
+
+init();
+
+
+
+</script>
+</body>
+</html>
